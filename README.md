@@ -9,17 +9,17 @@
 pip install lambda-uploader awscli
 
 ### Files
-requirements.txt : 実行に必要なライブラリ
-lambda_function.py : 実行ファイル
-lambda.json : 設定ファイル
-event.json : テスト用ファイル
+requirements.txt : 実行に必要なライブラリ  
+lambda_function.py : 実行ファイル  
+lambda.json : 設定ファイル  
+event.json : テスト用ファイル  
 
 ### Deploy Command
 lambda-uploader
 
 ## JSON Format
 以下の形式で保存しています。
-~~
+~~~
 {
   "riverName":"荒川",
   "height": "7.70",
@@ -29,4 +29,4 @@ lambda-uploader
   "dataLevel": "",
   "observatory":"岩淵水門（上）"
 }
-~~
+~~~

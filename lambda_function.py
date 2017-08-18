@@ -52,9 +52,9 @@ def format_timestamp(date):
 
     timestamp_jst = datetime(year, month, day, hour, minute)
     print(timestamp_jst)
-    timestamp_utc = timestamp_jst.astimezone(timezone('UTC')).isoformat()
+    timestamp_utc = timestamp_jst.astimezone(timezone('UTC')).strftime('%Y-%m-%dT%H:%M:%S')
     print(timestamp_utc)
-    return timestamp_utc
+    return timestamp_utc + 'Z'
 
 def format_text(text):
     text =re.sub('\r', "", text)
