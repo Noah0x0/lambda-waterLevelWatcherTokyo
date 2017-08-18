@@ -23,7 +23,7 @@ lambda-uploader
 {
   "riverName":"荒川",
   "height": "7.70",
-  "timestamp": "20170814T15:00:00",
+  "timestamp": "20170814T15:00:00Z",
   "waterLevel": "0.73",
   "dataTrend": "→",
   "dataLevel": "",
