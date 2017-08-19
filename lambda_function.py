@@ -51,10 +51,7 @@ def format_timestamp(date):
     minute = int(hour_minute[1])
 
     timestamp_jst = datetime(year, month, day, hour, minute)
-    print(timestamp_jst)
-
     timestamp_utc = timestamp_jst.astimezone(timezone('UTC')).strftime('%Y-%m-%dT%H:%M:%S')
-    print(timestamp_utc)
 
     return timestamp_utc + 'Z'
 
@@ -81,7 +78,7 @@ def put_s3(json_dict):
     return response
 
 def lambda_handler(event, context):
-    # ToDo:河川を引数で渡す
+    # ToDo:河川を引数で渡し、全国対応を行う
     html = request_waterlevel()
     
     # htmlをパースし、必要な情報をjsonに
