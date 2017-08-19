@@ -73,7 +73,7 @@ def put_s3(json_dict):
 
     response = client.put_object(
         ACL='public-read',
-        Body=json.dumps(json_dict),
+        Body=json.loads(json_dict),
         Bucket=S3_BUCKET,
         Key=key)
     print(key)
