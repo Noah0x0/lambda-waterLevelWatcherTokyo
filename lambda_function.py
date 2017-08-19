@@ -24,6 +24,9 @@ def html_parse(html):
     date = format_text(html.select("td.tb1td1Right")[-1].string)
     timestamp = format_timestamp(date)
     water_level = format_text(html.select("td.tb1td2Right")[-1].string)
+    # ToDo: ハイフンの場合がある
+    if (water_level == "-") :
+        water_level = 0
     data_trend = format_text(html.select("td.tb1td1")[-1].string)
     # 参照先のページに氾濫危険レベルの情報もないためモック(空文字)をセット
     data_level = "0"
