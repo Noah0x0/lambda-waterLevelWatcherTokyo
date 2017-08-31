@@ -24,6 +24,8 @@ def html_parse(html):
     date = format_text(html.select("td.tb1td1Right")[-1].string)
     timestamp = format_timestamp(date)
     water_level = format_text(html.select("td.tb1td2Right")[-1].string)
+    if (water_level == "-"):
+        water_level = 0
     trend = format_text(html.select("td.tb1td1")[-1].string)
     # 参照先のページに氾濫危険レベルの情報もないためモック(空文字)をセット
     data_level = 0
@@ -70,14 +72,13 @@ def put_s3(json_dict):
     day = words[0].split("-")[2]
     time = words[1]
     key = PREFIX+year+"/"+month+"/"+day+"/"+time+".json"
-    print(key)
 
     response = client.put_object(
         ACL='public-read',
         Body=json.loads(json_dict),
         Bucket=S3_BUCKET,
         Key=key)
-    print(key)
+    
     return response
 
 def lambda_handler(event, context):
