@@ -24,6 +24,8 @@ def html_parse(html):
     date = format_text(html.select("td.tb1td1Right")[-1].string)
     timestamp = format_timestamp(date)
     water_level = format_text(html.select("td.tb1td2Right")[-1].string)
+    if (water_level == "-"):
+        water_level = 0
     trend = format_text(html.select("td.tb1td1")[-1].string)
     # 参照先のページに氾濫危険レベルの情報もないためモック(空文字)をセット
     data_level = 0
@@ -50,11 +52,12 @@ def format_timestamp(date):
     hour = int(hour_minute[0])
     minute = int(hour_minute[1])
 
-    timestamp_jst = datetime(year, month, day, hour, minute)
-    print(timestamp_jst)
-    timestamp_utc = timestamp_jst.astimezone(timezone('UTC')).strftime('%Y-%m-%dT%H:%M:%S')
-    print(timestamp_utc)
-    return timestamp_utc + 'Z'
+    time = datetime(year, month, day, hour, minute, 00000)
+    timestamp_jst = timezone('Asia/Tokyo').localize(time)
+    timestamp_utc = timestamp_jst.astimezone(timezone('UTC'))
+    timestamp_utc_iso = timestamp_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
+
+:    return timestamp_utc_iso
 
 def format_text(text):
     text =re.sub('\r', "", text)
@@ -69,14 +72,13 @@ def put_s3(json_dict):
     day = words[0].split("-")[2]
     time = words[1]
     key = PREFIX+year+"/"+month+"/"+day+"/"+time+".json"
-    print(key)
 
     response = client.put_object(
         ACL='public-read',
         Body=json.loads(json_dict),
         Bucket=S3_BUCKET,
         Key=key)
-    print(key)
+    
     return response
 
 def lambda_handler(event, context):
