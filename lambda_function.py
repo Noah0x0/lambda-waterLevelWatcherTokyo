@@ -41,6 +41,7 @@ def html_parse(html):
     return json_dict
 
 def format_timestamp(date):
+    print(date)
     year = int(datetime.now().strftime('%Y'))
     words = date.split(" ")
     month_day = words[0].split("/")
@@ -50,11 +51,22 @@ def format_timestamp(date):
     hour = int(hour_minute[0])
     minute = int(hour_minute[1])
 
+<<<<<<< Updated upstream
     timestamp_jst = datetime(year, month, day, hour, minute)
     print(timestamp_jst)
     timestamp_utc = timestamp_jst.astimezone(timezone('UTC')).strftime('%Y-%m-%dT%H:%M:%S')
     print(timestamp_utc)
     return timestamp_utc + 'Z'
+=======
+    timestamp = datetime(year, month, day, hour, minute, 00000)
+    timestamp_jst = timezone('Asia/Tokyo').localize(timestamp)
+    timestamp_utc = timestamp_jst.astimezone(timezone('UTC'))
+    timestamp_utc_iso = timestamp_utc.strftime('%Y-%m-%dT%H:%M:%SZ')
+    print(timestamp_jst)
+    print(timestamp_utc)
+    print(timestamp_utc_iso)
+    return timestamp_utc_iso
+>>>>>>> Stashed changes
 
 def format_text(text):
     text =re.sub('\r', "", text)
