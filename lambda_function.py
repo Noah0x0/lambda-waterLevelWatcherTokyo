@@ -52,9 +52,9 @@ def format_timestamp(date):
 
     timestamp_jst = datetime(year, month, day, hour, minute)
     print(timestamp_jst)
-    timestamp_utc = timestamp_jst.astimezone(timezone('UTC')).isoformat()
+    timestamp_utc = timestamp_jst.astimezone(timezone('UTC')).strftime('%Y-%m-%dT%H:%M:%S')
     print(timestamp_utc)
-    return timestamp_utc
+    return timestamp_utc + 'Z'
 
 def format_text(text):
     text =re.sub('\r', "", text)
@@ -73,7 +73,7 @@ def put_s3(json_dict):
 
     response = client.put_object(
         ACL='public-read',
-        Body=json.dumps(json_dict),
+        Body=json.loads(json_dict),
         Bucket=S3_BUCKET,
         Key=key)
     print(key)
